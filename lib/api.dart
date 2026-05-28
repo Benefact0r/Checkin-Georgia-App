@@ -181,6 +181,8 @@ class CheckinApi {
   final String baseUrl;
   final http.Client _client;
 
+  void dispose() => _client.close();
+
   Future<List<Venue>> listVenues({Vertical? vertical, int limit = 30}) async {
     final params = <String, String>{'limit': '$limit'};
     if (vertical != null) params['vertical'] = vertical.apiValue;
