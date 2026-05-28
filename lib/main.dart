@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 import 'screens/home_screen.dart';
+import 'theme.dart';
 
 void main() {
   runApp(const CheckinApp());
@@ -15,12 +16,7 @@ class CheckinApp extends StatelessWidget {
     return MaterialApp(
       title: 'Checkin Georgia',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0EA5E9),
-        ),
-      ),
+      theme: AppTheme.light,
       home: HomeScreen(api: CheckinApi()),
     );
   }
