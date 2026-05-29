@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../api.dart';
+import '../theme.dart';
+import '../theme_controller.dart';
 import 'venue_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,6 +36,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Checkin Georgia'),
+        actions: [
+          IconButton(
+            tooltip: 'თემა',
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode_outlined
+                  : Icons.dark_mode_outlined,
+            ),
+            onPressed: () =>
+                themeController.toggle(Theme.of(context).brightness),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -86,8 +100,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Card(
                         margin: const EdgeInsets.symmetric(vertical: 6),
                         child: ListTile(
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: v.coverUrl != null
+                                ? Image.network(
+                                    v.coverUrl!,
+                                    width: 52,
+                                    height: 52,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, _, _) => const _Thumb(),
+                                  )
+                                : const _Thumb(),
+                          ),
                           title: Text(v.name),
-                          subtitle: Text('${v.vertical.label} · ${v.address}'),
+                          subtitle: Text(
+                            '${v.vertical.label}'
+                            '${v.district != null ? " · ${v.district}" : ""}'
+                            '\n${v.address}',
+                          ),
+                          isThreeLine: true,
                           trailing: const Icon(Icons.chevron_right),
                           onTap: () => Navigator.push(
                             context,
@@ -128,6 +159,20 @@ class _Chip extends StatelessWidget {
         selected: selected,
         onSelected: (_) => onTap(),
       ),
+    );
+  }
+}
+
+class _Thumb extends StatelessWidget {
+  const _Thumb();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 52,
+      height: 52,
+      decoration: const BoxDecoration(gradient: AppColors.sunset),
+      child: const Icon(Icons.place_outlined, color: Colors.white, size: 22),
     );
   }
 }

@@ -136,4 +136,75 @@ abstract final class AppTheme {
       ),
     );
   }
+
+  static ThemeData get dark {
+    const scheme = ColorScheme(
+      brightness: Brightness.dark,
+      primary: AppColors.violet400,
+      onPrimary: AppColors.ink0,
+      primaryContainer: AppColors.violet800,
+      onPrimaryContainer: AppColors.violet100,
+      secondary: AppColors.coral400,
+      onSecondary: AppColors.ink0,
+      secondaryContainer: AppColors.coral800,
+      onSecondaryContainer: AppColors.coral100,
+      tertiary: AppColors.gold,
+      onTertiary: AppColors.ink900,
+      error: AppColors.coral400,
+      onError: AppColors.ink0,
+      surface: AppColors.ink900,
+      onSurface: AppColors.ink50,
+      surfaceContainerHighest: AppColors.ink800,
+      onSurfaceVariant: AppColors.ink300,
+      outline: AppColors.ink700,
+      outlineVariant: AppColors.ink800,
+    );
+
+    final base = ThemeData(useMaterial3: true, colorScheme: scheme);
+
+    return base.copyWith(
+      scaffoldBackgroundColor: AppColors.ink900,
+      textTheme: GoogleFonts.notoSansGeorgianTextTheme(base.textTheme).apply(
+        bodyColor: AppColors.ink50,
+        displayColor: AppColors.ink50,
+      ),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.ink900,
+        foregroundColor: AppColors.ink50,
+        centerTitle: false,
+        elevation: 0,
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        color: AppColors.ink800,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: AppColors.ink700),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.coral500,
+          foregroundColor: AppColors.ink0,
+          textStyle: GoogleFonts.notoSansGeorgian(fontWeight: FontWeight.w700),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+        ),
+      ),
+      chipTheme: ChipThemeData(
+        selectedColor: AppColors.violet500,
+        backgroundColor: AppColors.ink800,
+        labelStyle: const TextStyle(color: AppColors.ink100),
+        secondaryLabelStyle: const TextStyle(color: AppColors.ink0),
+        side: BorderSide.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(999),
+        ),
+      ),
+    );
+  }
 }
+

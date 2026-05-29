@@ -127,18 +127,21 @@ class _VenueDetailScreenState extends State<VenueDetailScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('გადახდის ღილაკები (placeholder)',
+                    Text('გადახდა',
                         style: Theme.of(context).textTheme.titleSmall),
                     const SizedBox(height: 4),
-                    const Text(
-                      'POST /payments/mock — რეალური BOG/TBC მერე.',
-                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                    Text(
+                      'ჯავშნის შემდეგ — BOG / TBC.',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Wrap(

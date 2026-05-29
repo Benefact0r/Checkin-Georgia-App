@@ -7,20 +7,26 @@ const String kApiBaseUrl = String.fromEnvironment(
       'https://checkin-georgia-api-171625154738.europe-west1.run.app',
 );
 
-enum Vertical { salon, restaurant, cafe, bar }
+enum Vertical { salon, restaurant, cafe, bar, nightClub, spa }
 
 extension VerticalX on Vertical {
-  String get apiValue => name;
+  String get apiValue => switch (this) {
+        Vertical.nightClub => 'night_club',
+        _ => name,
+      };
   String get label => switch (this) {
         Vertical.salon => 'სალონები',
         Vertical.restaurant => 'რესტორნები',
         Vertical.cafe => 'კაფეები',
         Vertical.bar => 'ბარები',
+        Vertical.nightClub => 'ღამის კლუბები',
+        Vertical.spa => 'სპა და სხეული',
       };
 }
 
-Vertical _parseVertical(String s) =>
-    Vertical.values.firstWhere((v) => v.apiValue == s);
+// orElse guards against any future vertical so the app never crashes on parse.
+Vertical _parseVertical(String s) => Vertical.values
+    .firstWhere((v) => v.apiValue == s, orElse: () => Vertical.salon);
 
 class Venue {
   Venue({
@@ -31,6 +37,7 @@ class Venue {
     required this.description,
     required this.address,
     required this.city,
+    required this.district,
     required this.coverUrl,
     required this.photos,
     required this.lat,
@@ -44,6 +51,7 @@ class Venue {
   final String? description;
   final String address;
   final String city;
+  final String? district;
   final String? coverUrl;
   final List<String> photos;
   final double? lat;
@@ -57,6 +65,7 @@ class Venue {
         description: json['description'] as String?,
         address: json['address'] as String,
         city: json['city'] as String,
+        district: json['district'] as String?,
         coverUrl: json['cover_url'] as String?,
         photos: ((json['photos'] as List?) ?? const [])
             .map((e) => e as String)
@@ -134,6 +143,7 @@ class VenueDetail extends Venue {
     required super.description,
     required super.address,
     required super.city,
+    required super.district,
     required super.coverUrl,
     required super.photos,
     required super.lat,
@@ -157,6 +167,7 @@ class VenueDetail extends Venue {
         description: j['description'] as String?,
         address: j['address'] as String,
         city: j['city'] as String,
+        district: j['district'] as String?,
         coverUrl: j['cover_url'] as String?,
         photos: ((j['photos'] as List?) ?? const [])
             .map((e) => e as String)
